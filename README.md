@@ -31,7 +31,7 @@ spring.jpa.show-sql=true
 
 ### Backend
 
-1. Abre una terminal y navega a la carpeta `backend`.
+1. Abre una terminal y navega a la carpeta `back`.
 2. Ejecuta:
 	```sh
 	./mvnw spring-boot:run
@@ -43,7 +43,7 @@ spring.jpa.show-sql=true
 
 ### Frontend
 
-1. Abre otra terminal y navega a la carpeta `frontend`.
+1. Abre otra terminal y navega a la carpeta `front`.
 2. Instala dependencias:
 	```sh
 	npm install
@@ -59,6 +59,11 @@ La aplicación estará disponible en http://localhost:3000 y la API en http://lo
 
 - Frontend: http://localhost:3000
 - Backend (API): http://localhost:9180
+
+## 7. Credenciales para prueba
+
+- Email: prueba@sasf.net
+- Contaseña: prueba
 
 
 ## 7. Notas para despliegue en otras máquinas
