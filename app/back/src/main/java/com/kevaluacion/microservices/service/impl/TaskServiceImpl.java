@@ -94,7 +94,6 @@ public class TaskServiceImpl implements TaskService {
 		if (request.getAssignedTo() != null) {
 			existing.setAssignedTo(userRepository.findByUsername(request.getAssignedTo()).orElse(existing.getAssignedTo()));
 		}
-		// Permitir actualizar el projectId si viene en la request
 		if (request.getProjectId() != null) {
 			Project project = projectRepository.findById(request.getProjectId())
 				.orElseThrow(() -> new RuntimeException("Project not found with id: " + request.getProjectId()));

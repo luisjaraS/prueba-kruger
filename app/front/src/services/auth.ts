@@ -23,25 +23,21 @@ export interface User {
   role: 'USER' | 'ADMIN';
 }
 
-// Interface para el payload del JWT
 interface JWTPayload {
-  sub: string; // email del usuario
+  sub: string;
   role: 'USER' | 'ADMIN';
   iat: number;
   exp: number;
 }
 
 export class AuthService {
-  // Decodificar token JWT y extraer información del usuario
   private decodeToken(token: string): User | null {
     try {
       const payload: JWTPayload = jwtDecode(token);
-
-      // Extraer el username del email (antes del @)
       const username = payload.sub.split('@')[0];
 
       return {
-        id: payload.sub, // Usamos el email como ID por ahora
+        id: payload.sub,
         username: username,
         email: payload.sub,
         role: payload.role,
@@ -52,7 +48,6 @@ export class AuthService {
     }
   }
 
-  // Login de usuario
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
     try {
       const response = await apiClient.post<{ token: string }>(
@@ -61,12 +56,9 @@ export class AuthService {
       );
 
       if (response.token) {
-        // Guardar token en localStorage
         localStorage.setItem('auth_token', response.token);
-        // Configurar token en el cliente API
         apiClient.setToken(response.token);
 
-        // Decodificar token para obtener información del usuario
         const user = this.decodeToken(response.token);
 
         if (user) {
@@ -88,23 +80,19 @@ export class AuthService {
     }
   }
 
-  // Establece el token en el cliente API
   setAuthHeader(token: string): void {
     apiClient.setToken(token);
   }
 
-  // Logout de usuario
   logout(): void {
     localStorage.removeItem('auth_token');
     apiClient.clearToken();
   }
 
-  // Remover header de autorización
   removeAuthHeader(): void {
     apiClient.clearToken();
   }
 
-  // Verificar si hay token guardado
   getStoredToken(): string | null {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('auth_token');
@@ -112,12 +100,10 @@ export class AuthService {
     return null;
   }
 
-  // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {
     return this.getStoredToken() !== null;
   }
 
-  // Obtener el usuario actual decodificando el token
   getCurrentUser(): User | null {
     const token = this.getStoredToken();
     if (!token) return null;

@@ -1,4 +1,7 @@
+
 package com.kevaluacion.microservices.service.impl;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,13 +30,20 @@ public class AuthenticationImpl implements AuthenticationService {
     public LoginResponse login(LoginRequest request) {
     	log.info("Peticion recibida: login");
         
-        User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> {
-                	log.error("Error en: login");
-                	return new RuntimeException("User not found");
-                });
-        
-        String token = jwtUtilMethods.createToken(user);
-        return new LoginResponse(token);
+    User user = userRepository.findByEmail(request.getEmail())
+        .orElseThrow(() -> {
+            log.error("Error en: login - usuario no encontrado");
+            return new RuntimeException("User not found");
+        });
+
+
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            log.error("Error en: login - contraseña incorrecta");
+            throw new RuntimeException("Invalid credentials");
+        }
+
+    String token = jwtUtilMethods.createToken(user);
+    return new LoginResponse(token);
     }
 }

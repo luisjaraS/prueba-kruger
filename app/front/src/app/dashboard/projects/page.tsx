@@ -113,7 +113,6 @@ export default function ProjectsPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-[var(--foreground)]">Proyectos</h1>
@@ -191,7 +190,6 @@ export default function ProjectsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projectsLoading ? (
-          // Loading skeleton
           [...Array(6)].map((_, i) => (
             <Card key={i} className="p-6 bg-gradient-to-br from-[#181c2b] via-[#23232b] to-[var(--background)] border-0 shadow-lg backdrop-blur-sm">
               <div className="animate-pulse">

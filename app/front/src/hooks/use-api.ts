@@ -9,7 +9,6 @@ import { AxiosError } from 'axios';
 import apiClient from '@/lib/api-client';
 import { ApiResponse, PaginatedResponse } from '@/types';
 
-// Hook personalizado para queries GET
 export function useApiQuery<TData = any, TError = AxiosError>(
   key: string[],
   endpoint: string,
@@ -22,7 +21,6 @@ export function useApiQuery<TData = any, TError = AxiosError>(
   });
 }
 
-// Hook para queries paginadas
 export function usePaginatedQuery<TData = any, TError = AxiosError>(
   key: string[],
   endpoint: string,
@@ -48,7 +46,6 @@ export function usePaginatedQuery<TData = any, TError = AxiosError>(
   });
 }
 
-// Hook personalizado para mutaciones
 export function useApiMutation<
   TData = any,
   TVariables = any,
@@ -62,7 +59,6 @@ export function useApiMutation<
   return useMutation<TData, TError, TVariables>({
     mutationFn,
     onSuccess: (data, variables, context) => {
-      // Invalidar queries relacionadas automáticamente
       queryClient.invalidateQueries();
       options?.onSuccess?.(data, variables, context);
     },
@@ -70,7 +66,6 @@ export function useApiMutation<
   });
 }
 
-// Hook para mutaciones POST
 export function useCreateMutation<
   TData = any,
   TVariables = any,
@@ -86,7 +81,6 @@ export function useCreateMutation<
   );
 }
 
-// Hook para mutaciones PUT
 export function useUpdateMutation<
   TData = any,
   TVariables = any,
@@ -102,7 +96,6 @@ export function useUpdateMutation<
   );
 }
 
-// Hook para mutaciones DELETE
 export function useDeleteMutation<
   TData = any,
   TVariables = string,
@@ -118,7 +111,6 @@ export function useDeleteMutation<
   );
 }
 
-// Hook para invalidar queries específicas
 export function useInvalidateQueries() {
   const queryClient = useQueryClient();
 

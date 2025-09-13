@@ -4,9 +4,6 @@ import { ProjectResponse, Project } from '@/types';
 class ProjectService {
   private baseUrl = '/projects';
 
-  /**
-   * Obtiene todos los proyectos del usuario autenticado
-   */
   async getUserProjects(): Promise<ProjectResponse[]> {
     try {
       const response = await apiClient.get<ProjectResponse[]>(this.baseUrl);
@@ -19,9 +16,6 @@ class ProjectService {
     }
   }
 
-  /**
-   * Crea un nuevo proyecto
-   */
   async createProject(project: Project): Promise<ProjectResponse> {
     try {
       const response = await apiClient.post<ProjectResponse>(
@@ -37,9 +31,6 @@ class ProjectService {
     }
   }
 
-  /**
-   * Actualiza un proyecto existente
-   */
   async updateProject(id: number, project: Project): Promise<ProjectResponse> {
     try {
       const response = await apiClient.put<ProjectResponse>(
@@ -55,9 +46,6 @@ class ProjectService {
     }
   }
 
-  /**
-   * Elimina un proyecto
-   */
   async deleteProject(id: number): Promise<void> {
     try {
       await apiClient.delete(`${this.baseUrl}/${id}`);

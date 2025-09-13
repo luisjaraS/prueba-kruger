@@ -1,57 +1,81 @@
 # Despliegue del Aplicativo Fullstack (Backend + Frontend)
 
-## 1. Requisitos Previos
+## Despliegue con Docker y Docker Compose
 
-- Java 17
-- Node.js 18+
-- Acceso a una instancia de SQL Server (puede ser local o en otro servidor)
+Puedes levantar toda la aplicación (base de datos, backend y frontend) fácilmente usando Docker Compose.
 
-## 2. Levantar SQL Server Manualmente
+### 1. Requisitos
 
-Puedes instalar SQL Server de forma local o usar una instancia existente en red o en la nube.
+- Docker y Docker Compose instalados
 
-1. Descarga e instala SQL Server Express o Developer desde el sitio oficial de Microsoft.
-2. Asegúrate de que el servicio esté iniciado y escuchando en el puerto 1433.
-3. Crea la base de datos que usará la aplicación.
+### 2. Comando único para levantar todo
 
-## 3. Configuración del Backend para SQL Server
+Desde la raíz del proyecto, ejecuta:
 
-Edita el archivo `backend/src/main/resources/application.properties` con los siguientes valores (ajusta host, usuario y contraseña según tu entorno):
-
-```properties
-spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=nombre_de_tu_db
-spring.datasource.username=tu usuario
-spring.datasource.password=tu contraseña
-spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
+```sh
+docker-compose up --build
 ```
 
-## 4. Levantar el Backend y Frontend Manualmente
+Esto construirá y levantará automáticamente los tres servicios:
+
+- **db**: Base de datos PostgreSQL (con script de inicialización)
+- **back**: Backend Spring Boot (Java 17)
+- **front**: Frontend Next.js (Node 18)
+
+### 3. Servicios y puertos
+
+| Servicio | URL/Host         | Puerto local |
+|----------|------------------|--------------|
+| db       | localhost        | 5432         |
+| backend  | localhost        | 9180         |
+| frontend | localhost        | 3000         |
+
+
+### 4. Apagar los servicios
+
+Para detener y eliminar los contenedores:
+
+```sh
+docker-compose down
+```
+---
+
+## Despliegue manual (sin Docker)
+
+Si prefieres levantar los servicios manualmente:
+
+### Base de datos
+
+1. Instala PostgreSQL desde https://www.postgresql.org/download/ según tu sistema operativo.
+2. Asegúrate de que el servicio esté corriendo y puedas acceder con un usuario administrador (por ejemplo, `postgres`).
+3. Usa el archivo `db/init.sql` para crear la base de datos, tablas y datos iniciales. Puedes ejecutarlo así:
+   ```sh
+   psql -U postgres -f db/init.sql
+   ```
+   (Ajusta el usuario si es necesario)
+
 
 ### Backend
-
 1. Abre una terminal y navega a la carpeta `back`.
 2. Ejecuta:
-	```sh
-	./mvnw spring-boot:run
-	```
-	o si tienes Maven instalado globalmente:
-	```sh
-	mvn spring-boot:run
-	```
+   ```sh
+   ./mvnw spring-boot:run
+   ```
+   o si tienes Maven instalado globalmente:
+   ```sh
+   mvn spring-boot:run
+   ```
 
 ### Frontend
-
 1. Abre otra terminal y navega a la carpeta `front`.
 2. Instala dependencias:
-	```sh
-	npm install
-	```
+   ```sh
+   npm install
+   ```
 3. Inicia la aplicación:
-	```sh
-	npm run dev
-	```
+   ```sh
+   npm run dev
+   ```
 
 La aplicación estará disponible en http://localhost:3000 y la API en http://localhost:9180
 
@@ -60,16 +84,10 @@ La aplicación estará disponible en http://localhost:3000 y la API en http://lo
 - Frontend: http://localhost:3000
 - Backend (API): http://localhost:9180
 
-## 7. Credenciales para prueba
+## 6. Credenciales para prueba
 
 - Email: prueba@sasf.net
 - Contaseña: prueba
-
-
-## 7. Notas para despliegue en otras máquinas
-
-- Asegúrate de que la máquina destino tenga acceso a SQL Server (puerto 1433 abierto y accesible).
-- Si SQL Server está en otra máquina, cambia `localhost` por la IP o hostname correspondiente en la configuración.
 
 ---
 ¿Dudas? Consulta la documentación oficial de Spring Boot, SQL Server y Node.js.

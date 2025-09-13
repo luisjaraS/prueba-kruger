@@ -83,10 +83,8 @@ public class ProjectServiceImpl implements ProjectService {
 				log.error("Error en: delete");
 				return new NotFoundObjectException("Project not found, ID:" + id);
 			});
-		// Borrado lógico del proyecto
 		project.setStatus("INACTIVE");
 		projectRepository.save(project);
-		// Borrado lógico de las tareas asociadas
 	List<Task> tasks = taskRepository.findByProjectIdAndStatus(id, "ACTIVE");
 		if (!tasks.isEmpty()) {
 			for (Task task: tasks) {

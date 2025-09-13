@@ -20,7 +20,6 @@ export default function DashboardLayout({
     logoutMutation.mutate();
   };
 
-  // Mostrar loading mientras se inicializa la autenticación
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
@@ -45,7 +44,6 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen flex bg-[var(--background)]">
-      {/* Sidebar */}
       <aside className="w-64 hidden md:flex flex-col h-screen bg-[var(--card-bg)]/80 border-r border-[var(--card-border)] backdrop-blur-lg">
         <div className="flex items-center h-16 px-6 border-b border-[var(--card-border)]">
           <span className="text-xl font-bold tracking-tight bg-gradient-to-r from-red-500 via-orange-400 to-yellow-300 bg-clip-text text-transparent">Task Manager</span>
@@ -84,7 +82,6 @@ export default function DashboardLayout({
                         <li>
                           <Link href={`/dashboard/projects/${project.id}/tasks`} className="block px-3 py-1 rounded text-[var(--foreground)]/80 hover:bg-[var(--primary)]/20 text-sm">Ver tareas</Link>
                         </li>
-                        {/* Puedes agregar más submenús aquí */}
                       </ul>
                     )}
                   </li>
@@ -108,16 +105,13 @@ export default function DashboardLayout({
         </div>
       </aside>
 
-      {/* Main content area */}
       <div className="flex-1 flex flex-col min-h-screen">
-        {/* Header traslúcido */}
         <header className="sticky top-0 z-20 w-full h-16 bg-[var(--card-bg)]/70 border-b border-[var(--card-border)] backdrop-blur-lg flex items-center px-4 md:px-8 shadow-sm">
           <div className="flex-1 flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <span className="text-lg font-semibold text-[var(--foreground)]">Panel</span>
             </div>
             <div className="md:hidden">
-              {/* Aquí podrías poner un botón para abrir el sidebar en mobile */}
             </div>
           </div>
         </header>

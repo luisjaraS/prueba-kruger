@@ -4,7 +4,6 @@ import { useEffect } from 'react';
 import { authService, LoginCredentials } from '@/services/auth';
 import { useAuthStore } from '@/store';
 
-// Hook para inicializar el usuario desde el token almacenado
 export function useInitializeAuth() {
   const { login: loginStore, logout: logoutStore, setLoading } = useAuthStore();
 
@@ -17,23 +16,18 @@ export function useInitializeAuth() {
         try {
           const user = authService.getCurrentUser();
           if (user) {
-            // Actualizar el store con el usuario del token
             loginStore(user, token);
-            // Configurar el token en los headers de axios
             authService.setAuthHeader(token);
           } else {
-            // Token inválido, hacer logout
             authService.logout();
             logoutStore();
           }
         } catch (error) {
-          // Token inválido o expirado, hacer logout
           console.error('Error inicializando autenticación:', error);
           authService.logout();
           logoutStore();
         }
       } else {
-        // No hay token, asegurar logout
         authService.removeAuthHeader();
         logoutStore();
       }
@@ -45,7 +39,6 @@ export function useInitializeAuth() {
   }, [loginStore, logoutStore, setLoading]);
 }
 
-// Hook para el login
 export function useLogin() {
   const router = useRouter();
   const { login: loginStore, logout: logoutStore } = useAuthStore();
@@ -54,16 +47,12 @@ export function useLogin() {
     mutationFn: (credentials: LoginCredentials) =>
       authService.login(credentials),
     onSuccess: data => {
-      // Actualizar el store con los datos del usuario
       loginStore(data.user, data.token);
-      // Configurar header de autorización
       authService.setAuthHeader(data.token);
-      // Redirigir al dashboard
       router.push('/dashboard');
     },
     onError: (error: unknown) => {
       console.error('Error en login:', error);
-      // Limpiar cualquier estado de autenticación
       authService.logout();
       logoutStore();
       throw error;
@@ -71,7 +60,6 @@ export function useLogin() {
   });
 }
 
-// Hook para logout
 export function useLogout() {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -83,23 +71,16 @@ export function useLogout() {
       return Promise.resolve();
     },
     onSuccess: () => {
-      // Limpiar el store
       logoutStore();
-
-      // Limpiar cache de React Query
       queryClient.clear();
-
-      // Redirigir al login
       router.push('/login');
     },
     onError: () => {
-      // Aunque falle el logout, redirigir al login
       router.push('/login');
     },
   });
 }
 
-// Hook para verificar autenticación
 export function useAuth() {
   const authState = useAuthStore();
 
@@ -110,7 +91,6 @@ export function useAuth() {
   };
 }
 
-// Hook para proteger rutas
 export function useAuthGuard() {
   const { isAuthenticated } = useAuth();
   const router = useRouter();

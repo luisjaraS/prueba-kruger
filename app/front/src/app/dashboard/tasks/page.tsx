@@ -168,7 +168,6 @@ export default function TasksPage() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold text-[var(--foreground)]">Tareas</h1>

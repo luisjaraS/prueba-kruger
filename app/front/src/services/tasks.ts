@@ -4,9 +4,6 @@ import { TaskResponse, Task } from '@/types';
 class TaskService {
   private baseUrl = '/tasks';
 
-  /**
-   * Obtiene todas las tareas del usuario autenticado
-   */
   async getUserTasks(): Promise<TaskResponse[]> {
     try {
       const response = await apiClient.get<TaskResponse[]>(this.baseUrl);
@@ -19,9 +16,6 @@ class TaskService {
     }
   }
 
-  /**
-   * Obtiene las tareas de un proyecto específico
-   */
   async getTasksByProject(projectId: number): Promise<TaskResponse[]> {
     try {
       const response = await apiClient.get<TaskResponse[]>(
@@ -36,9 +30,6 @@ class TaskService {
     }
   }
 
-  /**
-   * Crea una nueva tarea
-   */
   async createTask(task: Task): Promise<TaskResponse> {
     try {
       const response = await apiClient.post<TaskResponse>(this.baseUrl, task);
@@ -49,9 +40,6 @@ class TaskService {
     }
   }
 
-  /**
-   * Actualiza una tarea existente
-   */
   async updateTask(id: number, task: Task): Promise<TaskResponse> {
     try {
       const response = await apiClient.put<TaskResponse>(
@@ -67,9 +55,6 @@ class TaskService {
     }
   }
 
-  /**
-   * Elimina una tarea
-   */
   async deleteTask(id: number): Promise<void> {
     try {
       await apiClient.delete(`${this.baseUrl}/${id}`);

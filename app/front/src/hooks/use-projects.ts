@@ -11,9 +11,6 @@ export const projectQueryKeys = {
   detail: (id: number) => [...projectQueryKeys.details(), id] as const,
 };
 
-/**
- * Hook para obtener todos los proyectos del usuario
- */
 export function useProjects() {
   return useQuery({
     queryKey: projectQueryKeys.lists(),
@@ -22,9 +19,6 @@ export function useProjects() {
   });
 }
 
-/**
- * Hook para crear un nuevo proyecto
- */
 export function useCreateProject() {
   const queryClient = useQueryClient();
 
@@ -39,9 +33,6 @@ export function useCreateProject() {
   });
 }
 
-/**
- * Hook para actualizar un proyecto
- */
 export function useUpdateProject() {
   const queryClient = useQueryClient();
 
@@ -60,9 +51,6 @@ export function useUpdateProject() {
   });
 }
 
-/**
- * Hook para eliminar un proyecto
- */
 export function useDeleteProject() {
   const queryClient = useQueryClient();
 

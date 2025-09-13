@@ -3,9 +3,6 @@ package com.kevaluacion.microservices.dto.res;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-// import com.kevaluacion.microservices.utils.enums.Status;
-
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
